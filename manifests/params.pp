@@ -24,10 +24,14 @@ class augeas::params {
     }
 
     'Debian': {
-      if versioncmp($::rubyversion, '1.9.1') >= 0 {
-        $ruby_pkg = 'libaugeas-ruby1.9.1'
+      if $::operatingsystemmajrelease >= 9 {
+        $ruby_pkg = 'ruby-augeas'
       } else {
-        $ruby_pkg = 'libaugeas-ruby1.8'
+        if versioncmp($::rubyversion, '1.9.1') >= 0 {
+          $ruby_pkg = 'libaugeas-ruby1.9.1'
+        } else {
+          $ruby_pkg = 'libaugeas-ruby1.8'
+        }
       }
       $augeas_pkgs = ['augeas-lenses', 'libaugeas0', 'augeas-tools']
     }
